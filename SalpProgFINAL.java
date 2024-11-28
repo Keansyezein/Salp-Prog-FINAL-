@@ -26,8 +26,7 @@ public class SalpProgFINAL {
       
       static void waittoEnter(){
           System.out.print("Press Enter to continue...");
-    Scanner scanner = new Scanner(System.in); // Ensure this uses the same Scanner instance as the rest of your code.
-    String input = scanner.nextLine(); // Wait for input
+          String input = inp.nextLine(); // Wait for input
       }
       
       static void buyprod (int product) throws IOException{
@@ -102,28 +101,13 @@ public class SalpProgFINAL {
       
       static void removeProduct() throws IOException {
         System.out.println("\nList of Products:");
-     /*   for (int i = 0; i < Product.size(); i++) {
-            System.out.println(i + ". " + Product.get(i) + " - P" + Price.get(i));
-        }
-        System.out.print("Choose product to remove: ");
-        int prodIndex = inp.nextInt();
 
-        if (prodIndex >= 0 && prodIndex < Product.size()) {
-            System.out.println("Removing " + Product.get(prodIndex));
-            Product.remove(prodIndex);
-            Price.remove(prodIndex);
-
-         //   saveProducts();
-            System.out.println("Product removed successfully!");
-        } else {
-            System.out.println("Invalid product selection.");
-        }*/
-     
       for (Map.Entry<String, Integer> entry : cart.entrySet()) {
             String productName = entry.getKey();
             int qty = entry.getValue();
             int productIndex = Product.indexOf(productName);
-
+            
+            
             if (productIndex != -1) { // Ensure the product exists in the list
                 int price = Price.get(productIndex) * qty;
                 System.out.println(productName + " || " + qty + " || P" + price);
@@ -131,17 +115,33 @@ public class SalpProgFINAL {
             } else {
                 System.out.println(productName + " not found in product list!");
             }
+            
+            
         }
-      System.out.print("Choose the product to remove from your cart: ");
-    String productToRemove = inp.next();
-
+      
+      System.out.println("Choose the product to remove from your cart: "); 
+      inp.nextLine();
+      String productToRemove = inp.nextLine().trim();
+      System.out.print("Are you Sure? Type \"Y\" to remove or Press enter to Cancel.\n");
+      String opt = inp.nextLine().toUpperCase();
+                
+      switch(opt){
+          case "Y":
     if (cart.containsKey(productToRemove)) {
         cart.remove(productToRemove);
         System.out.println(productToRemove + " has been removed from your cart.");
     } else {
         System.out.println("Invalid selection or product not in the cart!");
     }
-    }
+    break;
+    
+          default:
+              System.out.println("You have cancel the process. ");
+              waittoEnter();
+          break;
+    
+            }
+      }
       
     static void exportOrder() {
     if (cart.isEmpty()) {
